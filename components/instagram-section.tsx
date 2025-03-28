@@ -41,7 +41,11 @@ export default function InstagramSection() {
 
             <Button
               className="mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-              onClick={() => window.open("https://www.instagram.com/explore/tags/BodaBarbieFede/", "_blank")}
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.open("https://www.instagram.com/explore/tags/BodaBarbieFede/", "_blank");
+                }
+              }}
             >
               <Instagram className="h-4 w-4 mr-2" aria-hidden="true" />
               <span>Ver fotos en Instagram</span>

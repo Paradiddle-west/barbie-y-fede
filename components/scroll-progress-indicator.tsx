@@ -6,6 +6,9 @@ export default function ScrollProgressIndicator() {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
+    // Solo ejecutar esto en el cliente
+    if (typeof window === 'undefined' || typeof document === 'undefined') return
+    
     const handleScroll = () => {
       const totalHeight = document.body.scrollHeight - window.innerHeight
       const progress = (window.scrollY / totalHeight) * 100

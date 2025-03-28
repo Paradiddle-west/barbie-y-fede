@@ -22,6 +22,9 @@ export default function NavigationMenu() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
+    // Solo ejecutar esto en el cliente
+    if (typeof window === 'undefined' || typeof document === 'undefined') return
+    
     const handleScroll = () => {
       // Show navigation after scrolling down 300px
       if (window.scrollY > 300) {
@@ -55,16 +58,20 @@ export default function NavigationMenu() {
   }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
     setMobileMenuOpen(false)
   }
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setMobileMenuOpen(false)
+    if (typeof document !== 'undefined') {
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
     }
+    setMobileMenuOpen(false)
   }
 
   return (
@@ -156,7 +163,9 @@ export default function NavigationMenu() {
         <div
           className="h-full bg-blue-600"
           style={{
-            width: `${Math.min((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100)}%`,
+            width: typeof window !== 'undefined' && typeof document !== 'undefined' 
+              ? `${Math.min((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100)}%` 
+              : '0%',
             transition: "width 0.2s ease-out",
           }}
         />
